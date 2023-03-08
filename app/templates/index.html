@@ -57,50 +57,124 @@
   const audioContext = new AudioContext()
     AFRAME.registerComponent('listener_obj', {
     init: function() {
-      this.el.addEventListener('click', (e) => {
+      this.el.addEventListener('mouseenter', (e) => {
         audioContext.resume();
         var objectid = this.el.id;
         console.log(objectid);
         if (objectid=="object1")
         {
-          checkanswer("mat","objects1_correct","objects1_wrong");
-
+          document.getElementById("object1a").object3D.visible = true;
         }
-  
+
         if (objectid=="object2")
         {
-          checkanswer("gap","objects2_correct","objects2_wrong");
-
+          document.getElementById("object2a").object3D.visible = true;
         }
-  
+
         if (objectid=="object3")
         {
-
-            checkanswer("hat","objects3_correct","objects3_wrong");
+          document.getElementById("object3a").object3D.visible = true;
         }
 
         if (objectid=="object4")
         {
-
-            checkanswer("bat","objects4_correct","objects4_wrong");
+          document.getElementById("object4a").object3D.visible = true;
         }
 
         if (objectid=="object5")
         {
-
-            checkanswer("bag","objects5_correct","objects5_wrong");
+          document.getElementById("object5a").object3D.visible = true;
         }
 
         if (objectid=="object6")
         {
           status = 1;
           play(sound_file[question_list[questionno]]);
-          
+          document.getElementById("text1").setAttribute('visible', false);
+
+        }
+      })
+
+      this.el.addEventListener('mouseleave', (e) => {
+          var objectid = this.el.id;
+          console.log(objectid);
+          if (objectid=="object1")
+          {
+            document.getElementById("object1a").object3D.visible = false;
+          }
+
+          if (objectid=="object2")
+          {
+            document.getElementById("object2a").object3D.visible = false;
+          }
+
+          if (objectid=="object3")
+          {
+            document.getElementById("object3a").object3D.visible = false;
+          }
+
+          if (objectid=="object4")
+          {
+            document.getElementById("object4a").object3D.visible = false;
+          }
+
+          if (objectid=="object5")
+          {
+            document.getElementById("object5a").object3D.visible = false;
+          }
+      })
+
+      this.el.addEventListener('click', (e) => {
+        audioContext.resume();
+        var objectid = this.el.id;
+        console.log(objectid);
+        if (status==1)
+        {
+          if (objectid=="object1")
+          {
+            checkanswer("bun","objects1_correct","objects1_wrong");
+
+          }
+    
+          if (objectid=="object2")
+          {
+            checkanswer("cut","objects2_correct","objects2_wrong");
+
+          }
+    
+          if (objectid=="object3")
+          {
+
+              checkanswer("hut","objects3_correct","objects3_wrong");
+          }
+
+          if (objectid=="object4")
+          {
+
+              checkanswer("nut","objects4_correct","objects4_wrong");
+          }
+
+          if (objectid=="object5")
+          {
+
+              checkanswer("sun","objects5_correct","objects5_wrong");
+          }
+
+        }
+        
+
+        if (objectid=="object6")
+        {
+          status = 1;
+          play(sound_file[question_list[questionno]]);
+          document.getElementById("text1").setAttribute('visible', false);
+
         }
   
       })
     }
   })
+
   </script>
 
   <script>
@@ -125,6 +199,8 @@
     {
         correct_count = 0;
         wrong_count = 0;
+        document.getElementById("text1").setAttribute('value', 'Press Here');
+        document.getElementById("text2").setAttribute('value', 'Result 0/5');
         document.getElementById("objects1_correct").object3D.visible = false;
         document.getElementById("objects2_correct").object3D.visible = false;
         document.getElementById("objects3_correct").object3D.visible = false;
@@ -166,6 +242,7 @@
 
     function shownextquestion()
     {
+        document.getElementById("text2").setAttribute('value', 'Result '+correct_count+'/5');
         questionno = questionno+1;
         if (questionno > 4)
         {
@@ -177,6 +254,7 @@
             questionno = 0
         }else
         {
+          document.getElementById("text1").setAttribute('visible', true);
             //play(sound_file[question_list[questionno]]); 
         }
         
@@ -207,11 +285,12 @@
 <body>
     <a-scene id="mainscene" visible="false">
         <a-assets>
-            <img id="city" src="static/newbg.jpg">
+            <img id="city" src="static/bgs5.jpg">
             <img id="star" src="static/star.png">
             <img id="start" src="static/start.png"> 
             <img id="correct" src="static/correct.png">
             <img id="wrong" src="static/wrong.png">
+            <img id="arrow" src="static/arrow.png">
         </a-assets>
 
 
@@ -219,61 +298,81 @@
 
     
       <!-- Button . -->
-      <a-entity id="object1" listener_obj position="-9 -9 -0.4" rotation="-90 90 0"> <!--mat-->
-        <a-image  class="link" src="#star" width="6" height="6"></a-image>
+      <a-entity id="object1a" position="6 -2 -5" rotation="0 -30 180" visible="false"> <!--bun-->
+        <a-image  src="#arrow" width="2" height="2"></a-image>
       </a-entity>
-      <a-entity id="objects1_correct" visible="false" position="-9 -6 -0.4" rotation="-90 90 0">
+      <a-entity id="object1" listener_obj position="6 -1.6 -4.9" rotation="0 -30 0"> <!--bun-->
+        <a-image  class="link" src="#star" width="2" height="1"></a-image>
+      </a-entity>
+      <a-entity id="objects1_correct" visible="false" position="6 -1.6 -4.9" rotation="0 -30 0">
         <a-image  id="desc1a" src="#correct" geometry="primitive: plane; height: 1; width: 1"></a-image>
       </a-entity>
-      <a-entity id="objects1_wrong" visible="false" position="-9 -6 -0.4" rotation="-90 90 0">
+      <a-entity id="objects1_wrong" visible="false" position="6 -1.6 -4.9" rotation="0 -30 0">
         <a-image  id="desc1b" src="#wrong" geometry="primitive: plane; height: 1; width: 1"></a-image>
       </a-entity>
       
+      
+      <a-entity id="object2a" position="3 -2 -5" rotation="0 0 180" visible="true"> <!--cut-->
+        <a-image  src="#arrow" width="2" height="2"></a-image>
+      </a-entity>
+      <a-entity id="object2"  listener_obj position="3 -1.6 -4.9" rotation="0 0 0"><!--cut-->
+        <a-image  class="link" src="#star" width="2" height="1.1" ></a-image>
+      </a-entity>
+      <a-entity id="objects2_correct" visible="false" position="3 -1.6 -4.9" rotation="0 0 0">
+        <a-image  id="desc2a" src="#correct" geometry="primitive: plane; height: .6; width: .6"></a-image>
+      </a-entity>
+      <a-entity id="objects2_wrong" visible="false" position="3 -1.6 -4.9" rotation="0 0 0">
+        <a-image  id="desc2b" src="#wrong" geometry="primitive: plane; height: .6; width: .6"></a-image>
+      </a-entity>
     
-      <a-entity id="object2"  listener_obj position="5 -6 6" rotation="0 90 0"><!--gap-->
-        <a-image  class="link" src="#star" width="1" height="3" ></a-image>
+
+      <a-entity id="object3a" position="-5 4 1" rotation="0 120 180" visible="false"> <!--hut-->
+        <a-image  src="#arrow" width="2" height="2"></a-image>
       </a-entity>
-      <a-entity id="objects2_correct" visible="false" position="5 -4 6" rotation="0 -90 0">
-        <a-image  id="desc2a" src="#correct" geometry="primitive: plane; height: 1; width: 1"></a-image>
+      <a-entity id="object3" listener_obj position="-5 4.4 1" rotation="0 120 0"><!--hut-->
+        <a-image  class="link" src="#star" width="2" height="1"></a-image>
       </a-entity>
-      <a-entity id="objects2_wrong" visible="false" position="5 -4 6" rotation="0 90 0">
-        <a-image  id="desc2b" src="#wrong" geometry="primitive: plane; height: 1; width: 1"></a-image>
-      </a-entity>
-    
-      <a-entity id="object3" listener_obj position="-4 1 -8" rotation="0 0 0"><!--hat-->
-        <a-image  class="link" src="#star" width="2" height="2"></a-image>
-      </a-entity>
-      <a-entity id="objects3_correct" visible="false" position="-4 2.8 -8" rotation="-10 0 0">
+      <a-entity id="objects3_correct" visible="false" position="-5 4.4 1" rotation="0 120 0">
         <a-image  id="desc3a" src="#correct" geometry="primitive: plane; height: 1; width: 1"></a-image>
       </a-entity>
-      <a-entity id="objects3_wrong" visible="false" position="-4 2.8 -8" rotation="-10 0 0">
+      <a-entity id="objects3_wrong" visible="false" position="-5 4.4 1" rotation="0 0 0">
         <a-image  id="desc3b" src="#wrong" geometry="primitive: plane; height: 1; width: 1"></a-image>
       </a-entity>
 
-      <a-entity id="object4" listener_obj position="-9 -2 -3.5" rotation="0 90 0"><!--bat-->
-        <a-image  class="link" src="#star" width="1" height="3"></a-image>
+
+      <a-entity id="object4a" position="5.6 -5 -5" rotation="-30 -30 0" visible="false"> <!--nut-->
+        <a-image  src="#arrow" width="2" height="2"></a-image>
       </a-entity>
-      <a-entity id="objects4_correct" visible="false" position="-9 0 -3.5" rotation="0 90 0">
-        <a-image  id="desc4a" src="#correct" geometry="primitive: plane; height: 1; width: 1"></a-image>
+      <a-entity id="object4" listener_obj position="5.6 -5.5 -5" rotation="-30 -30 0"><!--nut-->
+        <a-image  class="link" src="#star" width="2" height="1"></a-image>
       </a-entity>
-      <a-entity id="objects4_wrong" visible="false" position="-9 0 -3.5" rotation="0 90 0">
-        <a-image  id="desc4b" src="#wrong" geometry="primitive: plane; height: 1; width: 1"></a-image>
+      <a-entity id="objects4_correct" visible="false" position="3.5 -3.4 -3" rotation="0 -30  0">
+        <a-image  id="desc4a" src="#correct" geometry="primitive: plane; height: .8; width: .8"></a-image>
+      </a-entity>
+      <a-entity id="objects4_wrong" visible="false" position="3.5 -3.4 -3" rotation="0 -30 0">
+        <a-image  id="desc4b" src="#wrong" geometry="primitive: plane; height: .8; width: .8"></a-image>
       </a-entity>
 
 
-      <a-entity id="object5" listener_obj position="-9 -5.3 4" rotation="0 90 0"><!--bag-->
-        <a-image  class="link" src="#star" width="4" height="3"></a-image>
+
+      <a-entity id="object5a" position="-3 6 9" rotation="0 0 -45" visible="false"> <!--sun-->
+        <a-image  src="#arrow" width="3" height="3"></a-image>
       </a-entity>
-      <a-entity id="objects5_correct" visible="false" position="-9 -3.3 4" rotation="0 90 0">
+      <a-entity id="object5" listener_obj position="-3 5.1 8.3" rotation="0 0 -45"><!--sun-->
+        <a-image  class="link" src="#star" width="3" height="1.5"></a-image>
+      </a-entity>
+      <a-entity id="objects5_correct" visible="false" position="-3 5.1 8.2" rotation="0 -180 0">
         <a-image  id="desc5a" src="#correct" geometry="primitive: plane; height: 1; width: 1"></a-image>
       </a-entity>
-      <a-entity id="objects5_wrong" visible="false" position="-9 -3.3 4" rotation="0 90 0">
+      <a-entity id="objects5_wrong" visible="false" position="-3 5.1 8.2" rotation="0 -180 0">
         <a-image  id="desc5b" src="#wrong" geometry="primitive: plane; height: 1; width: 1"></a-image>
       </a-entity>
     
-      <a-entity id="object6" listener_obj position=".5 1 -3" rotation="0 0 0"><!--start-->
+      <a-entity id="object6" listener_obj position="2 1 -3" rotation="0 0 0"><!--start-->
         <a-image  class="link" src="#start" width=".8" height=".8"></a-image>
       </a-entity>
+      <a-text id="text2" value="Result 0/5" scale="1 1 1" position="2.5 1 -3" visible="true"></a-text>
+      <a-text id="text1" value="Press here" scale="1 1 1" position="1.5 1.6 -3" visible="true"></a-text>
       <a-sky radius="15" src="#city"></a-sky>
 
       <a-entity>
@@ -285,7 +384,7 @@
                     geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
                     material="color: black; shader: flat"
                     cursor="maxDistance: 30; fuse: true; fuseTimeout:5500"
-                    raycaster="objects: .link">
+                    raycaster="objects: .link, .link2">
           </a-entity>
         </a-entity>
       </a-entity>
@@ -294,8 +393,8 @@
     </a-scene>
 
     <audio preload controls autoplay visible="false">
-        <source src="static/sound/sulver_1.mp3" type="audio/mp3"></source>
-        <source src="static/sound/sulver_1.ogg" type="audio/ogg"></source>
+        <source src="static/sound/sulver_5.mp3" type="audio/mp3"></source>
+        <source src="static/sound/sulver_5.ogg" type="audio/ogg"></source>
     </audio>
 
     <div style="position:absolute; top:0px; left:0px; z-index:1000;visibility: visible;" id="loading_bar" class="container">
@@ -315,25 +414,25 @@
     var correct_count = 0;
     var wrong_count = 0;
     var total_count = 5;
-    var letter_list = ["bag","bat","gap","hat","mat"];
+    var letter_list = ["bun","cut","hut","nut","sun"];
     var question_list =[];
-    var sound_list= ["bag","bat","gap","hat","mat"];
-    var sound_file= ["bag","bat","gap","hat","mat"];
+    var sound_list= ["bun","cut","hut","nut","sun"];
+    var sound_file= ["bun","cut","hut","nut","sun"];
     var questionno = 0;
     var ans_list = ["","","","",""];
     var answer1 ="";
     var status=0;
     var a = document.querySelector('audio');
     var  audiosprite = {
-      'all': [ 0, 12.9 ],
+      'all': [ 0, 14.4 ],
       'correct': [ 0, 2.0 ],
       'wrong': [ 2.5, 3.6 ],
-      'bag': [ 4.1, 6.0 ],
-      'bat': [ 6.7, 7.8 ],
-      'gap': [ 8.2, 9.4 ],
-      'hat': [ 9.6, 10.8 ],
-      'mat': [ 11.3, 12.5 ],
-      'end': [ 12.5, 12.8 ]
+      'bun': [ 4.5, 5.5 ],
+      'cut': [ 6.2, 7.3 ],
+      'hut': [ 8.6, 9.5 ],
+      'nut': [ 10.5, 11.5 ],
+      'sun': [ 12.5, 13.8 ],
+      'end': [ 14.0, 14.3 ]
     }
     var end = 0;
     var username ="";
